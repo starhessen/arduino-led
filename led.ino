@@ -1,23 +1,4 @@
-/*
- *  Project     Adalight FastLED
- *  @author     David Madison
- *  @link       github.com/dmadison/Adalight-FastLED
- *  @license    LGPL - Copyright (c) 2017 David Madison
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+
 
 #include <Arduino.h>
 
@@ -27,11 +8,10 @@ const uint16_t
 const uint8_t
 	Brightness =  255;        // maximum brightness
 
-// --- FastLED Setings
+
 #define LED_TYPE     WS2812B  // led strip type for FastLED
 #define COLOR_ORDER  GRB      // color order for bitbang
 #define PIN_DATA     6        // led data output pin
-// #define PIN_CLOCK  7       // led data clock pin (uncomment if you're using a 4-wire LED type)
 
 // --- Serial Settings
 const unsigned long
@@ -39,34 +19,15 @@ const unsigned long
 const uint16_t
 	SerialTimeout  = 60;      // time before LEDs are shut off if no data (in seconds), 0 to disable
 
-// --- Optional Settings (uncomment to add)
+
 #define SERIAL_FLUSH          // Serial buffer cleared on LED latch
-// #define CLEAR_ON_START     // LEDs are cleared on reset
 
-// --- Debug Settings (uncomment to add)
-// #define DEBUG_LED 13       // toggles the Arduino's built-in LED on header match
-// #define DEBUG_FPS 8        // enables a pulse on LED latch
-
-// --------------------------------------------------------------------
 
 #include <FastLED.h>
 
 CRGB leds[Num_Leds];
 uint8_t * ledsRaw = (uint8_t *)leds;
 
-// A 'magic word' (along with LED count & checksum) precedes each block
-// of LED data; this assists the microcontroller in syncing up with the
-// host-side software and properly issuing the latch (host I/O is
-// likely buffered, making usleep() unreliable for latch). You may see
-// an initial glitchy frame or two until the two come into alignment.
-// The magic word can be whatever sequence you like, but each character
-// should be unique, and frequent pixel values like 0 and 255 are
-// avoided -- fewer false positives. The host software will need to
-// generate a compatible header: immediately following the magic word
-// are three bytes: a 16-bit count of the number of LEDs (high byte
-// first) followed by a simple checksum value (high byte XOR low byte
-// XOR 0x55). LED data follows, 3 bytes per LED, in order R, G, B,
-// where 0 = off and 255 = max brightness.
 
 const uint8_t magic[] = {
 	'A','d','a'};
